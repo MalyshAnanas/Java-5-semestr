@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static String punkt_1(String stroka) {
@@ -137,11 +138,11 @@ public class Main {
 
     public static void main(String[] args) {
         // Задача 1
-        //Scanner scanner = new Scanner(System.in);
-        //System.out.print("Введите строку: ");
-        //String stroka = scanner.nextLine();
-        //System.out.print("1.Подстрока максимальной длины: ");
-//        System.out.print(punkt_1(stroka));
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите строку: ");
+        String stroka = scanner.nextLine();
+        System.out.print("1.Подстрока максимальной длины: ");
+        System.out.print(punkt_1(stroka));
 
         // Задача 2
         int[] mass1 = {3, 9, 5, 7, 1};
