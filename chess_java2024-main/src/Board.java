@@ -60,10 +60,11 @@ public class Board {
 
     public boolean move_figure(int row, int col, int row1, int col1){
       Figure figure = this.fields[row][col];
-      if (figure != null && figure.canMove(row, col, row1, col1) && this.figure_on_way(row, col, row1, col1)
-              && this.fields[row1][col1] == null && figure.getColor() == this.colorGame && this.check_SHAH(row, col, row1, col1)){
+      if (figure != null && figure.canMove(row, col, row1, col1) && this.figure_on_way(row, col, row1, col1) && this.fields[row1][col1] == null
+              && figure.getColor() == this.colorGame && this.check_SHAH(row, col, row1, col1) && this.figure_on_way(row, col, row1, col1)){
           this.fields[row1][col1] = figure;
           this.fields[row][col] = null;
+
           return true;
       }
       else  if (figure.canAttack(row, col, row1, col1) && this.figure_on_way(row, col, row1, col1) && this.fields[row1][col1] != null
@@ -112,35 +113,27 @@ public class Board {
 
     private boolean check_SHAH (int row, int col, int row1, int col1){ //если шаха нет, то возвращает true
         Figure figure = this.fields[row][col];
+        Figure temp = this.fields[row1][col1];
         if (figure != null && (figure.canAttack(row, col, row1, col1) || figure.canMove(row, col, row1, col1))
                 && this.figure_on_way(row, col, row1, col1) && figure.getColor() == this.colorGame){
             for (int i=0; i<8; i++){ // ищем короля
                 for (int q=0; q<8; q++){
                     if (this.fields[i][q] != null && this.fields[i][q].getName()=="K" && this.fields[i][q].getColor()==this.colorGame){
-                        for (int w=0; w<8; w++){ // ищем фигуры, которые могут поставить шах
-                            for (int e=0; e<8; e++){
-                                if(this.fields[w][e].canAttack(w, e, i, q) && this.fields[w][e].getColor()!=this.colorGame){
-                                    System.out.print("======ШАХ======");
-                                    this.fields[row1][col1] = figure;
-                                    this.fields[row][col] = null;
-                                    for (int z=0; z<8; z++){
-                                        for (int x=0; x<8; x++){
-                                            if(this.fields[z][x].canAttack(z,x,i,q) && this.fields[z][x].getColor()!=this.colorGame){
-                                                this.fields[row][col]=figure;
-                                                this.fields[row1][col1]=null;
-                                                System.out.print("!!!!!!!!!!!Нельзя ходить под шах!!!!!!!!!!!");
-                                                return false;
-                                            }
-                                        }
-                                    }
+                        this.fields[row1][col1] = figure;
+                        this.fields[row][col] = null;
+                        for (int z=0; z<8; z++){ //ищем фигуру, которая может поставить шах
+                            for (int x=0; x<8; x++){
+                                if(this.fields[z][x].canAttack(z,x,i,q) && this.fields[z][x].getColor()!=this.colorGame){
                                     this.fields[row][col]=figure;
-                                    this.fields[row1][col1]=null;
-                                }
-                                else {
-                                    return true;
+                                    this.fields[row1][col1]=temp;
+                                    System.out.print("!!!!!!!!!!!Нельзя ходить под шах!!!!!!!!!!!");
+                                    return false;
                                 }
                             }
                         }
+                        this.fields[row][col]=figure;
+                        this.fields[row1][col1]=temp;
+                        return true;
                     }
                 }
             }
@@ -149,31 +142,31 @@ public class Board {
     }
 
     private boolean check_MATE (int row, int col, int row1, int col1){ //если мата нет, то возвращает true
-        Figure figure = this.fields[row][col];
-        if (!this.check_SHAH(row, col, row1, col1) && figure != null && this.fields[row1][col1] == null){
-            for (int i=0; i<8; i++){
-                for (int j=0; j<8; j++){
-                    if (this.fields[i][j] != null && this.fields[i][j].getName()=="K" && this.fields[i][j].getColor()==this.colorGame){ //ищем короля
-                        for (int q = Math.max(i - 1, 0); q <= Math.min(i + 1, 7); q++) {
-                            for (int w = Math.max(j - 1, 0); w <= Math.min(j + 1, 7); w++) {
-                                if (this.check_SHAH(i, j, q, w)){
-                                    return true;
+        for (int i=0; i<8; i++) { // ищем короля
+            for (int j = 0; j < 8; j++) {
+                if (this.fields[i][j] != null && this.fields[i][j].getName() == "K" && this.fields[i][j].getColor() != this.colorGame) {
+                    for (int p=0; p<8; p++){ //ищем фигуру, которая может поставить шах
+                        for (int u=0; u<8; u++){
+                            if (!this.check_SHAH(p, u, i, j)){
+                                for (int q = Math.max(i - 1, 0); q <= Math.min(i + 1, 7); q++) { //иещм ход для короля
+                                    for (int w = Math.max(j - 1, 0); w <= Math.min(j + 1, 7); w++) {
+                                        if (this.check_SHAH(i, j, q, w)){
+                                            return true;
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    }
-                    if (this.fields[i][j] != null && this.fields[i][j].getName()!="K" && this.fields[i][j].getColor()==this.colorGame){ //ищем фигуру "защитника"
-                        for (int q=0; q<8; q++){
-                            for (int w=0; w<8; w++){ //ищем ход для защиты короля
-                                if (this.check_SHAH(i,j,q,w)){
-                                    return true;
+                                for (int q=0; q<8; q++){
+                                    for (int w=0; w<8; w++){ //ищем ход для защиты короля
+                                        if (this.check_SHAH(i,j,q,w)){
+                                            return true;
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
         }
         System.out.print("_____ШАХ и МАТ_____");
         return false;
