@@ -55,7 +55,5 @@ public class Main {
                 case 'b': board.setColorGame('w');break;
             }
         }
-        //test
-
     }
 }
