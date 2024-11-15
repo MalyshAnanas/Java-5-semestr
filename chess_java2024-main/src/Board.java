@@ -77,7 +77,7 @@ public class Board {
 
     private boolean figure_on_way(int row, int col, int row1, int col1){
         Figure figure = this.fields[row][col];
-        if(figure != null && figure.canMove(row, col, row1, col1) && this.fields[row1][col1] == null && figure.getColor() == this.colorGame){
+        if(figure != null && figure.canMove(row, col, row1, col1) && figure.getColor() == this.colorGame){
             if (figure.getName()=="B" || figure.getName()=="Q"){
                 for (int i=Math.min(col, col1)+1; i<Math.max(col, col1); i++){
                     for(int j=Math.min(row, row1)+1; j<Math.max(row, row1); j++){
@@ -112,8 +112,8 @@ public class Board {
 
     private boolean check_SHAH (int row, int col, int row1, int col1){ //если шаха нет, то возвращает true
         Figure figure = this.fields[row][col];
-        if (figure != null && figure.canMove(row, col, row1, col1) && this.figure_on_way(row, col, row1, col1)
-                && this.fields[row1][col1] == null && figure.getColor() == this.colorGame){
+        if (figure != null && (figure.canAttack(row, col, row1, col1) || figure.canMove(row, col, row1, col1))
+                && this.figure_on_way(row, col, row1, col1) && figure.getColor() == this.colorGame){
             for (int i=0; i<8; i++){ // ищем короля
                 for (int q=0; q<8; q++){
                     if (this.fields[i][q] != null && this.fields[i][q].getName()=="K" && this.fields[i][q].getColor()==this.colorGame){
