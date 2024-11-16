@@ -21,6 +21,10 @@ public class Main {
             board.print_board();
             System.out.println();
 
+            if (board.Mate) {
+                break;
+            }
+
             System.out.println("Управление:");
             System.out.println("----row ol row1 col1: Ход фигуры из кретки (row, col) в (row1, col1)");
 
@@ -49,6 +53,7 @@ public class Main {
                 row1 = Integer.parseInt(coords[2]);
                 col1 = Integer.parseInt(coords[3]);
             }
+
 
             switch (board.getColorGame()){
                 case 'w': board.setColorGame('b');break;

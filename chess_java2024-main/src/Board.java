@@ -2,6 +2,8 @@ import Figures.*;
 
 public class Board {
 
+    boolean Mate = false;
+
     private char colorGame;
 
     public void setColorGame(char colorGame) {
@@ -141,24 +143,81 @@ public class Board {
         return false;
     }
 
-    private boolean check_MATE (int row, int col, int row1, int col1){ //если мата нет, то возвращает true
-        for (int i=0; i<8; i++) { // ищем короля
+    private boolean check_MATE (){ //если мата нет, то возвращает true
+        int kingR = -1;
+        int kingC = -1;
+        for (int i=0; i<8; i++) { // ищем нашего короля
             for (int j = 0; j < 8; j++) {
-                if (this.fields[i][j] != null && this.fields[i][j].getName() == "K" && this.fields[i][j].getColor() != this.colorGame) {
+                if (this.fields[i][j] != null && this.fields[i][j].getName() == "K" && this.fields[i][j].getColor() == this.colorGame) {
+                    kingR = i;
+                    kingC = j;
                     for (int p=0; p<8; p++){ //ищем фигуру, которая может поставить шах
                         for (int u=0; u<8; u++){
-                            if (!this.check_SHAH(p, u, i, j)){
-                                for (int q = Math.max(i - 1, 0); q <= Math.min(i + 1, 7); q++) { //иещм ход для короля
+                            if (fields[p][u] != null && fields[p][u].getColor() != colorGame && fields[p][u].canAttack(p, u, i, j) && figure_on_way(p, u, i, j)){ // если кто-то угрожает нашему королю
+                                for (int q = Math.max(i - 1, 0); q <= Math.min(i + 1, 7); q++) { //ищем ход для короля
                                     for (int w = Math.max(j - 1, 0); w <= Math.min(j + 1, 7); w++) {
-                                        if (this.check_SHAH(i, j, q, w)){
-                                            return true;
+                                        if (fields[q][w] == null || fields[q][w] != null && fields[q][w].getColor() !=colorGame) {
+
+                                            boolean flag = false;
+                                            Figure temp = fields[q][w];
+                                            Figure king = fields[i][j];
+                                            fields[q][w] = king;
+                                            fields[i][j] = null;
+                                            for (int k = 0; k < 8; k++) {
+                                                for (int m = 0; m < 8; m++) { // ищем фигуру, которая может угрожать королю
+                                                    if (this.fields[k][m] != null && this.fields[k][m].getColor() != this.colorGame && fields[k][m].canAttack(k, m, q, w) && figure_on_way(k, m, q, w)){
+                                                        flag = true;
+                                                    }
+                                                    if (flag) {
+                                                        break;
+                                                    }
+                                                }
+                                                if (flag) {
+                                                    break;
+                                                }
+                                            }
+                                            fields[i][j] = king;
+                                            fields[q][w] = temp;
+                                            if (!flag) {
+                                                return true; // король может убежать
+                                            }
                                         }
                                     }
                                 }
                                 for (int q=0; q<8; q++){
-                                    for (int w=0; w<8; w++){ //ищем ход для защиты короля
-                                        if (this.check_SHAH(i,j,q,w)){
-                                            return true;
+                                    for (int w=0; w<8; w++){ // ищем фигуру для защиты короля
+                                        if (fields[q][w] != null && fields[q][w].getColor() == colorGame && fields[q][w].getName() != "K") {
+                                            for (int k = 0; k < 8; k++) {
+                                                for (int m = 0; m < 8; m++) { // ищем ход для защиты короля
+                                                    Figure figure = fields[q][w];
+                                                    if  (figure != null && (figure.canAttack(q, w, k, m) && fields[k][m] == null || figure.canMove(q, w, k, m) && fields[k][m] != null && fields[k][m].getColor() != colorGame)
+                                                            && this.figure_on_way(q, w, k, m) && figure.getColor() == this.colorGame) {
+                                                        Figure temp = fields[k][m];
+                                                        Figure new_figure = fields[q][w];
+                                                        fields[k][m] = new_figure;
+                                                        fields[q][w] = null;
+                                                        boolean flag = false;
+                                                        for (int a = 0; a < 8; a++) {
+                                                            for (int s = 0; s < 8; s++) { // ищем фигуру, которая может угрожать королю
+                                                                if (this.fields[a][s] != null && this.fields[a][s].getColor() != this.colorGame && !fields[a][s].canAttack(a, s, i, j) && figure_on_way(a, s, i, j)){
+                                                                    flag = true;
+                                                                }
+                                                                if (flag) {
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (flag) {
+                                                                break;
+                                                            }
+                                                        }
+                                                        fields[q][w] = new_figure;
+                                                        fields[k][m] = temp;
+                                                        if (!flag) {
+                                                            return true; // короля можно защитить
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -168,7 +227,14 @@ public class Board {
                 }
             }
         }
-        System.out.print("_____ШАХ и МАТ_____");
-        return false;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (fields[i][j] != null && fields[i][j].getColor() != colorGame && fields[i][j].canAttack(i, j, kingR, kingC) && figure_on_way(i, j, kingR, kingC)){
+                    System.out.println("_____ШАХ и МАТ_____"); // если не нашли ходов для защиты от мата
+                    return false;
+                }
+            }
+        }
+        return true; // не нашли мат
     }
 }
