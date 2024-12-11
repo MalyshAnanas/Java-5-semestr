@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="461.0" prefWidth="660.0" spacing="20.0" style="-fx-background-color: #878ECD;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.congratulationapp.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Label text="Введите имя получателя:">
+      <font>
+         <Font name="Comic Sans MS" size="24.0" />
+      </font>
+   </Label>
+   <TextField maxWidth="250.0" prefHeight="30.0" style="-fx-background-color: #B9BBDF;" />
+   <HBox prefHeight="50.0" prefWidth="200.0" spacing="160.0">
+      <children>
+         <Label text="Выберете пол">
+            <font>
+               <Font name="Comic Sans MS" size="24.0" />
+            </font>
+         </Label>
+         <ChoiceBox prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Мужской">
+             <items>
+                 <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Мужской" />
+                     <String fx:value="Женский" />
+                 </FXCollections>
+             </items>
+         </ChoiceBox>
+      </children>
+   </HBox>
+   <HBox prefHeight="50.0" prefWidth="200.0" spacing="80.0">
+      <children>
+         <Label text="Выберете обращение">
+            <font>
+               <Font name="Comic Sans MS" size="24.0" />
+            </font>
+         </Label>
+          <ChoiceBox prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Ты">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Ты" />
+                      <String fx:value="Вы" />
+                  </FXCollections>
+              </items>
+          </ChoiceBox>
+      </children>
+   </HBox>
+   <HBox prefHeight="50.0" prefWidth="200.0" spacing="100.0">
+      <children>
+         <Label text="Выберете праздник">
+            <font>
+               <Font name="Comic Sans MS" size="24.0" />
+            </font>
+         </Label>
+
+          <ChoiceBox prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Новый год">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Новый год" />
+                      <String fx:value="День рождения" />
+                      <String fx:value="Хороший день" />
+                  </FXCollections>
+              </items>
+          </ChoiceBox>
+      </children>
+   </HBox>
+    <HBox prefHeight="50.0" prefWidth="200.0" spacing="50.0">
+        <children>
+            <Label text="Количество пожеланий">
+                <font>
+                    <Font name="Comic Sans MS" size="24.0" />
+                </font>
+            </Label>
+         <TextField prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #B9BBDF;" />
+        </children>
+    </HBox>
+
+      
+      
+          <Label fx:id="welcomeText">
+      <font>
+         <Font name="Comic Sans MS" size="24.0" />
+      </font>
+   </Label>
+    <Button onAction="#onHelloButtonClick" style="-fx-background-color: #DFF4F3;" text="Готово">
+      <font>
+         <Font name="Comic Sans MS" size="14.0" />
+      </font></Button>
+</VBox>
