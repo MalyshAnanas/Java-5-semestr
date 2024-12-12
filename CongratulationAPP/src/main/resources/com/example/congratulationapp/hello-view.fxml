@@ -16,24 +16,24 @@
          <Font name="Comic Sans MS" size="24.0" />
       </font>
    </Label>
-   <TextField maxWidth="250.0" prefHeight="30.0" style="-fx-background-color: #B9BBDF;" />
-   <HBox prefHeight="50.0" prefWidth="200.0" spacing="160.0">
-      <children>
-         <Label text="Выберете пол">
-            <font>
-               <Font name="Comic Sans MS" size="24.0" />
-            </font>
-         </Label>
-         <ChoiceBox prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Мужской">
-             <items>
-                 <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Мужской" />
-                     <String fx:value="Женский" />
-                 </FXCollections>
-             </items>
-         </ChoiceBox>
-      </children>
-   </HBox>
+   <TextField fx:id="Name" maxWidth="250.0" prefHeight="30.0" style="-fx-background-color: #B9BBDF;" />
+    <HBox prefHeight="50.0" prefWidth="200.0" spacing="160.0">
+        <Label text="Выберете пол">
+           <font>
+               <Font name="Comic Sans MS" size="24.0"/>
+           </font>
+        </Label>
+        <ChoiceBox fx:id="Gender" prefHeight="30.0" prefWidth="100.0"
+                   style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;"
+                   value="Мужской">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Мужской"/>
+                    <String fx:value="Женский"/>
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+    </HBox>
    <HBox prefHeight="50.0" prefWidth="200.0" spacing="80.0">
       <children>
          <Label text="Выберете обращение">
@@ -41,7 +41,7 @@
                <Font name="Comic Sans MS" size="24.0" />
             </font>
          </Label>
-          <ChoiceBox prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Ты">
+          <ChoiceBox fx:id="Appeal" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Ты">
               <items>
                   <FXCollections fx:factory="observableArrayList">
                       <String fx:value="Ты" />
@@ -59,7 +59,7 @@
             </font>
          </Label>
 
-          <ChoiceBox prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Новый год">
+          <ChoiceBox fx:id="Holiday" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #DDE7F2; -fx-font-family: Comic Sans MS; -fx-font-size: 15;" value="Новый год">
               <items>
                   <FXCollections fx:factory="observableArrayList">
                       <String fx:value="Новый год" />
@@ -77,13 +77,10 @@
                     <Font name="Comic Sans MS" size="24.0" />
                 </font>
             </Label>
-         <TextField prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #B9BBDF;" />
+         <TextField fx:id="countCongratulation" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #B9BBDF;" />
         </children>
     </HBox>
-
-      
-      
-          <Label fx:id="welcomeText">
+    <Label fx:id="welcomeText">
       <font>
          <Font name="Comic Sans MS" size="24.0" />
       </font>

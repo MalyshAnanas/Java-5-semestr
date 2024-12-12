@@ -4,17 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B9BBDF;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label text="Ваше поздравление:" textAlignment="CENTER">
-         <font>
-            <Font name="Comic Sans MS" size="24.0" />
-         </font>
-      </Label>
-      <TextArea maxWidth="500.0" prefHeight="300.0" style="-fx-background-color: #878ECD; -fx-border-color: #878ECD;">
-         <font>
-            <Font name="Comic Sans MS" size="16.0" />
-         </font>
-      </TextArea>
-   </children>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #B9BBDF;"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.congratulationapp.CongratulationController">
+   <Label text="Ваше поздравление:" textAlignment="CENTER">
+      <font>
+         <Font name="Comic Sans MS" size="24.0"/>
+      </font>
+   </Label>
+   <TextArea wrapText="true" fx:id="congratulation" maxWidth="500.0" prefHeight="300.0" style="-fx-background-color: #878ECD; -fx-border-color: #878ECD;">
+      <font>
+         <Font name="Comic Sans MS" size="16.0"/>
+      </font>
+   </TextArea>
 </VBox>
