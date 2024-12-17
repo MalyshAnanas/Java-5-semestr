@@ -1,20 +1,25 @@
 package com.example.congratulationapp;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
+import java.net.URL;
+import java.sql.SQLException;
 import java.util.Random;
+import java.util.ResourceBundle;
 
-public class CongratulationController {
-    final Random random = new Random();
+public class CongratulationController implements Initializable { //implements Initializable - наследование интерфейса для инициализации
+    Random random = new Random();
+    DBAdapter adapter = new DBAdapter(); //получаем объект класса DBAdapter
     @FXML
     private TextArea congratulation;
 
-    public void EndText(String Gender, String Name, String Appeal, String Holiday, Integer countCongratulation) {
+    public void EndText(String Gender, String Name, String Appeal, String Holiday, Integer countCongratulation) throws SQLException {
         /*
-        * Дорогой, Name!
-        * Поздравляю Appeal с Holiday! Желаю тебе Wishes
-        * */
+         * Дорогой, Name!
+         * Поздравляю Appeal с Holiday! Желаю тебе Wishes
+         * */
         String temp;
         String result = "";
         if (Gender.equals("Мужской")) {temp = Congratulation.GenderList[0];}
@@ -26,7 +31,6 @@ public class CongratulationController {
         else {temp = Congratulation.AppealList[1];}
 
         result += temp + "c ";
-//        System.out.println(Holiday);
         if (Holiday.equals("Новый год")){
             temp = "Новым годом";
         }
@@ -55,5 +59,11 @@ public class CongratulationController {
             }
         }
         congratulation.setText(result);
+        adapter.insert_data(Name, Gender, Appeal, Holiday, countCongratulation, result); //Записываем наши данные в БД
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        adapter.create_or_connection();
+    } //Подключаемся к БД во время создания окна
 }
